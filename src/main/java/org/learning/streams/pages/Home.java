@@ -1,5 +1,6 @@
 package org.learning.streams.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,5 +38,15 @@ public class Home {
         sortButton.click();
         originalList = elementList.stream().map(WebElement::getText).collect(Collectors.toList());
         sortedList = originalList.stream().sorted().collect(Collectors.toList());
+    }
+
+    public void getPrice(String veggie) {
+        List<String> price = elementList.stream().filter(s -> s.getText().contains(veggie)).map(s -> getPriceVeggie(s)).collect(Collectors.toList());
+        price.forEach(a -> System.out.println(a));
+    }
+
+    private String getPriceVeggie(WebElement s) {
+        String priceValue = s.findElement(By.xpath("following-sibling::td[1]")).getText();
+        return priceValue;
     }
 }
